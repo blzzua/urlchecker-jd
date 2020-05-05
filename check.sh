@@ -2,9 +2,9 @@
 
 check_url_http_status (){
   URL="$1"
-  DEFAULT_STATUSCODE=-1
-  CURL=STATUSCODE=$(curl -s -I "$URL" | grep -E -o  "HTTP/.{3} [0-9]{3}"  | cut -d\  -f2):-2
-  STATUSCODE=${STATUSCODE:-DEFAULT_STATUSCODE}
+  STATUSCODE=-1  # default.
+  STATUSCODE=$(curl -s -I "$URL" | grep -E -o  "HTTP/.{3} [0-9]{3}"  | cut -d\  -f2)
+  echo ${STATUSCODE}
 }
 
 
@@ -17,8 +17,9 @@ fi
 
 cat urls.txt  | while read URL;
 do
-  STATUSCODE=$(check_url_http_status "$url")
-  echo -e "${url}\t${STATUSCODE}"
+  STATUSCODE=$(check_url_http_status "$URL")
+  echo -e "${URL}\t${STATUSCODE}"
   true
 done
+
 

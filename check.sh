@@ -1,9 +1,11 @@
 #!/bin/bash
 
+CURL_TIMEOUT=3 # sec
+
 check_url_http_status (){
   URL="$1"
   DEFAULT_STATUSCODE=0  # default.
-  STATUSCODE=$(curl -s -I "$URL" | grep -E -o  "HTTP/.{3} [0-9]{3}"  | cut -d\  -f2)
+  STATUSCODE=$(curl --connect-timeout=${CURL_TIMEOUT} -s -I "$URL" | grep -E -o  "HTTP/.{3} [0-9]{3}"  | cut -d\  -f2)
   if [[ "X$STATUSCODE" == "X" ]];
   then
     STATUSCODE="$DEFAULT_STATUSCODE"

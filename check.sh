@@ -18,7 +18,13 @@ fi
 cat urls.txt  | while read URL;
 do
   STATUSCODE=$(check_url_http_status "$URL")
-  echo -e "${URL}\t${STATUSCODE}"
+  ## - при любом "плохом" ответе от сервиса прерывать дальнейшую проверку.
+  ## - "живой" - значит код ответа не 5XX или 4XX
+  if [[ "$STATUSCODE" -gt 400  ]] || ;
+  then
+    echo "Выход при плохом коде ответа $STATUSCODE проверки  $URL"
+    exit 1
+  fi
   true
 done
 

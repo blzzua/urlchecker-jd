@@ -21,5 +21,5 @@ set +x
 
 echo "2) Скрипт на любом знакомом языке программирования или bash, который бы вывел top-10 ip, на которые было отдано больше всего трафика ($body_bytes_sent в логе). Сортировать по убыванию трафика."
 set -x
-awk '{ip=$1; body_bytes_sent_arr[ip]+=$10;}; END {for (ip in body_bytes_sent){print ip,body_bytes_sent_arr[ip]} } ' log.txt  | sort -rnk2 | head -n10
+awk '{ip=$1; body_bytes_sent_arr[ip]+=$10;}; END {for (ip in body_bytes_sent_arr){print ip,body_bytes_sent_arr[ip]} } ' log.txt  | sort -rnk2 | head -n10
 set +x
